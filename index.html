@@ -100,14 +100,15 @@
       const response = await fetch('https://d6epiyd31c.execute-api.us-east-1.amazonaws.com/BedrockStage/bedrock-kb-chat-api-amirul-v2', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: message })  // ✅ correct key
+        body: JSON.stringify({ question: message })  // <-- correct key!
       });
 
       const data = await response.json();
-      appendMessage('bot', data.answer || data.reply || 'No reply from model.');
+      console.log("API response:", data);
+      appendMessage('bot', data.answer || data.reply || '🤖 No answer provided.');
     } catch (error) {
+      console.error("Fetch error:", error);
       appendMessage('bot', '⚠️ Error contacting the API.');
-      console.error(error);
     }
   }
 
@@ -125,6 +126,10 @@
       sendMessage();
     }
   }
+
+  window.onload = () => {
+    document.getElementById('userInput').focus();
+  };
 </script>
 
 </body>
