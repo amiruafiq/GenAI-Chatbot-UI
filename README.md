@@ -6,7 +6,8 @@ A lightweight web-based chatbot powered by **AWS Bedrock** and **U Mobile's Know
 
 ## 📸 Preview
 
-![Chat Screenshot](img\a.png)
+![Chat Screenshot](img/a.png)
+
 
 ---
 
