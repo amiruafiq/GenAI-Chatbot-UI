@@ -101,21 +101,25 @@
 </head>
 <body>
 
-<div class="chat-container">
-  <!-- ✅ Logo Header -->
-  <div class="chat-header">
-    <img src="img\1.webp" alt="U Mobile Logo">
-  </div>
-
-  <!-- 💬 Chat area -->
-  <div class="chat-messages" id="chatMessages"></div>
-
-  <!-- ⌨️ Input area -->
-  <div class="chat-input">
-    <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleKey(event)" />
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
+    <div class="chat-container">
+        <!-- ✅ Logo + Title Header -->
+        <div class="chat-header" style="flex-direction: column;">
+          <img src="img\1.webp" alt="U Mobile Logo" style="max-height: 50px; margin-bottom: 5px;">
+          <div style="font-weight: bold; font-size: 16px; color: #f26522;">
+            Ask UBot <span style="color: #666; font-size: 14px;">× AWS AI</span>
+          </div>
+        </div>
+      
+        <!-- 💬 Chat area -->
+        <div class="chat-messages" id="chatMessages"></div>
+      
+        <!-- ⌨️ Input area -->
+        <div class="chat-input">
+          <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleKey(event)" />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+      
 
 <script>
   async function sendMessage() {
