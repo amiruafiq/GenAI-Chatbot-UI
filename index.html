@@ -17,8 +17,9 @@
 
     .chat-container {
       background: white;
-      width: 400px;
-      height: 600px;
+      width: 100%;
+      max-width: 500px;
+      height: 90vh;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       display: flex;
@@ -75,6 +76,13 @@
       align-self: flex-start;
       background-color: #e6e6e6;
     }
+
+    @media (max-width: 600px) {
+      .chat-container {
+        height: 100vh;
+        border-radius: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -96,29 +104,38 @@
     appendMessage('user', message);
     input.value = '';
 
+    const loadingId = appendMessage('bot', 'Typing...');
+
     try {
       const response = await fetch('https://d6epiyd31c.execute-api.us-east-1.amazonaws.com/BedrockStage/bedrock-kb-chat-api-amirul-v2', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: message })  // <-- correct key!
+        body: JSON.stringify({ question: message })
       });
 
       const data = await response.json();
-      console.log("API response:", data);
-      appendMessage('bot', data.answer || data.reply || '🤖 No answer provided.');
+      updateMessage(loadingId, data.answer || data.reply || '🤖 No answer provided.');
     } catch (error) {
       console.error("Fetch error:", error);
-      appendMessage('bot', '⚠️ Error contacting the API.');
+      updateMessage(loadingId, '⚠️ Error contacting the API.');
     }
   }
 
   function appendMessage(sender, text) {
     const chat = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
+    const id = 'msg-' + Date.now();
+    messageDiv.id = id;
     messageDiv.classList.add('message', sender);
     messageDiv.textContent = text;
     chat.appendChild(messageDiv);
     chat.scrollTop = chat.scrollHeight;
+    return id;
+  }
+
+  function updateMessage(id, newText) {
+    const msg = document.getElementById(id);
+    if (msg) msg.textContent = newText;
   }
 
   function handleKey(event) {
